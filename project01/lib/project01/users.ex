@@ -4,6 +4,7 @@ defmodule Project01.Users do
   """
 
   import Ecto.Query, warn: false
+  import Ecto.Query, only: [from: 2]
   alias Project01.Repo
 
   alias Project01.Users.User
@@ -73,6 +74,12 @@ defmodule Project01.Users do
     |> Repo.update()
   end
 
+ def get_user_by_name!(username_param, email_param) do
+  query = (from u in User, 
+    where: u.username == ^(username_param), 
+    select: %User{id: u.id, username: u.username, email: u.email})
+  Repo.all(query)
+ end
   @doc """
   Deletes a User.
 

@@ -20,6 +20,18 @@ defmodule Project01Web.UserController do
     end
   end
 
+  def showByName(conn, %{"email" => email, "username" => username}) do
+    users = Users.get_user_by_name!(username, email)
+    IO.inspect(users)
+    render(conn, "index.json", users: users)
+    # with {:ok, %User{} = user} <- Users.create_user(user_params) do
+    #   conn
+    #   |> put_status(:created)
+    #   |> put_resp_header("location", Routes.user_path(conn, :show, user))
+    #   |> render("show.json", user: user)
+    # end
+  end
+
   def show(conn, %{"id" => id}) do
     user = Users.get_user!(id)
     render(conn, "show.json", user: user)

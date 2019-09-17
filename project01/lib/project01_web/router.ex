@@ -25,12 +25,13 @@ defmodule Project01Web.Router do
 
     post "/users", UserController, :create
     get "/users/:id", UserController, :show
+    get "/users", UserController, :showByName
     put "/users/:id", UserController, :update
     # delete "/users/:id", UserController, :delete
 
     post "/workingtimes/:userID", WorkingtimeController, :create
-    get "/workingtimes/:userID", WorkingtimeController, :show
-    # get "/workingtimes/:userID", WorkingtimeController, :showByUserId
+    # get "/workingtimes/:userID", WorkingtimeController, :show
+    get "/workingtimes/:userID", WorkingtimeController, :showByUserId
     delete "/workingtimes/:userID", WorkingtimeController, :delete
 
   end

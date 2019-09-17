@@ -4,6 +4,7 @@ defmodule Project01.Workingtimes do
   """
 
   import Ecto.Query, warn: false
+  import Ecto.Query, only: [from: 2]
   alias Project01.Repo
 
   alias Project01.Workingtimes.Workingtime

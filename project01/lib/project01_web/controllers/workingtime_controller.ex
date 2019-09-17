@@ -33,9 +33,9 @@ defmodule Project01Web.WorkingtimeController do
   end
 
   def showByUserId(conn, %{"userID" => user_id}) do
-    workingtime = Workingtimes.get_workingtimes_by_user_id!(user_id)
-    IO.inspect(workingtime)
-    render(conn, "show.json", workingtime: workingtime)
+    workingtimes = Workingtimes.get_workingtimes_by_user_id!(user_id)
+    IO.inspect(workingtimes)
+    render(conn, "index.json", workingtimes: workingtimes)
   end
 
   def update(conn, %{"id" => id, "workingtime" => workingtime_params}) do
