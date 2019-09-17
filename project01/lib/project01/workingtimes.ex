@@ -40,6 +40,12 @@ defmodule Project01.Workingtimes do
   """
   def get_workingtime!(id), do: Repo.get!(Workingtime, id)
 
+  def get!() do
+    query = (from u in Workingtime,
+                select: %Workingtime{id: u.id, start: u.start, end: u.end, user_id: u.user_id})
+    Repo.all(query)
+  end
+
   def get_workingtimes_by_user_id!(userID) do
     query = (from u in Workingtime,
                 where: u.user_id == ^(userID),

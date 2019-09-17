@@ -26,10 +26,21 @@ defmodule Project01Web.WorkingtimeController do
     end
   end
 
+  # def show(conn, %{"userID" => user_id}) do
+  #   workingtime = Workingtimes.get_workingtime!(user_id)
+  #   IO.inspect(workingtime)
+  #   render(conn, "show.json", workingtime: workingtime)
+  # end
+
   def show(conn, %{"userID" => user_id}) do
-    workingtime = Workingtimes.get_workingtime!(user_id)
-    IO.inspect(workingtime)
-    render(conn, "show.json", workingtime: workingtime)
+    workingtimes = Workingtimes.get_workingtimes_by_user_id!(user_id)
+    IO.inspect(workingtimes)
+    render(conn, "index.json", workingtimes: workingtimes)
+  end
+
+  def showAll(conn, _params) do
+    workingtimes = Users.get!()
+    render(conn, "index.json", workingtimes: workingtimes)
   end
 
   def showByUserId(conn, %{"userID" => user_id}) do
