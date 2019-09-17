@@ -6,6 +6,7 @@ defmodule Project01.Users.User do
     field :email, :string
     field :username, :string
     has_many :workingtimes, Project01.Workingtimes.Workingtime
+    has_many :clocks, Project01.Clocks.Clock
     
     timestamps()
   end

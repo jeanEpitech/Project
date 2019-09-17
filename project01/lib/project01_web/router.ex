@@ -35,5 +35,7 @@ defmodule Project01Web.Router do
     get "/workingtimes/:userID", WorkingtimeController, :show
     delete "/workingtimes/:userID", WorkingtimeController, :delete
 
+    post "/clocks/:userID", ClockController, :create
+    get "/clocks/:userID", ClockController, :show
   end
 end

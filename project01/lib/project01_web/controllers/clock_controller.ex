@@ -3,6 +3,7 @@ defmodule Project01Web.ClockController do
 
   alias Project01.Clocks
   alias Project01.Clocks.Clock
+  alias Project01.Users
 
   action_fallback Project01Web.FallbackController
 
@@ -11,8 +12,11 @@ defmodule Project01Web.ClockController do
     render(conn, "index.json", clocks: clocks)
   end
 
-  def create(conn, %{"clock" => clock_params}) do
-    with {:ok, %Clock{} = clock} <- Clocks.create_clock(clock_params) do
+  def create(conn, %{"userID" => user_id, "clock" => clock_params}) do
+
+    user = Users.get_user!(user_id)
+    IO.inspect(user)
+    with {:ok, %Clock{} = clock} <- Clocks.create_clock(user, clock_params) do
       conn
       |> put_status(:created)
       |> put_resp_header("location", Routes.clock_path(conn, :show, clock))
@@ -20,9 +24,16 @@ defmodule Project01Web.ClockController do
     end
   end
 
-  def show(conn, %{"id" => id}) do
-    clock = Clocks.get_clock!(id)
-    render(conn, "show.json", clock: clock)
+  # def show(conn, %{"userID" => user_id}) do
+  #   clock = Clocks.get_clock!(user_id)
+  #   IO.inspect(clock)
+  #   render(conn, "show.json", clock: clock)
+  # end
+
+  def show(conn, %{"userID" => user_id}) do
+    clocks = Clocks.get_clocks_by_user_id!(user_id)
+    IO.inspect(clocks)
+    render(conn, "index.json", clocks: clocks)
   end
 
   def update(conn, %{"id" => id, "clock" => clock_params}) do

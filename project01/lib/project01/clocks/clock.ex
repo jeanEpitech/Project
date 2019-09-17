@@ -5,7 +5,8 @@ defmodule Project01.Clocks.Clock do
   schema "clocks" do
     field :status, :boolean, default: false
     field :time, :naive_datetime
-    field :user_id, :id
+    # field :user_id, :id
+    belongs_to(:user, Project01.Users.User)
 
     timestamps()
   end

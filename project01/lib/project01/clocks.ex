@@ -4,9 +4,12 @@ defmodule Project01.Clocks do
   """
 
   import Ecto.Query, warn: false
+  import Ecto.Query, only: [from: 2]
   alias Project01.Repo
 
   alias Project01.Clocks.Clock
+  alias Project01.Users
+  alias Project01.Users.User
 
   @doc """
   Returns the list of clocks.
@@ -36,6 +39,13 @@ defmodule Project01.Clocks do
 
   """
   def get_clock!(id), do: Repo.get!(Clock, id)
+  
+  def get_clocks_by_user_id!(userID) do
+    query = (from u in Clock,
+                where: u.user_id == ^(userID),
+                select: %Clock{id: u.id, time: u.time, user_id: u.user_id})
+    Repo.all(query)
+  end
 
   @doc """
   Creates a clock.
@@ -49,9 +59,15 @@ defmodule Project01.Clocks do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_clock(attrs \\ %{}) do
+  # def create_clock(attrs \\ %{}) do
+  #   %Clock{}
+  #   |> Clock.changeset(attrs)
+  #   |> Repo.insert()
+  # end
+  def create_clock(%User{} = users, attrs \\ %{}) do
     %Clock{}
     |> Clock.changeset(attrs)
+    |> Ecto.Changeset.put_change(:user_id, users.id)
     |> Repo.insert()
   end
 
